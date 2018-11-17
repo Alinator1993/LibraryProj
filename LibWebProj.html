@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Library</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet">
+  </head>
+
+  <body>
+
+      <header>
+
+      </header>
+
+      <section>
+
+      </section>
+
+    <script>
+    var header = document.querySelector('header');
+    var section = document.querySelector('section');
+    var requestURL = 'https://lgapi-us.libapps.com/1.1/guides/577970?site_id=8488&key=0b8da796b00334ae3471f60e6a10e8c6&sort_by=count_hit&expand=owner';
+    var request = new XMLHttpRequest();
+    request.open('GET', requestURL);
+    request.responseType = 'json';
+    request.send();
+    request.onload = function() {
+      var libinfo = request.response;
+      populateHeader(libinfo);
+      showdetails(libinfo);
+    }
+    function populateHeader(jsonObj) {
+      var myH1 = document.createElement('h1');
+      myH1.textContent = jsonObj['name'];
+      header.appendChild(myH1);
+      var myPara = document.createElement('p');
+      myPara.textContent = 'Descrpition: ' + jsonObj[0].description + ' // Published: ' + jsonObj[0].published;
+      header.appendChild(myPara);
+    }
+    function showdetails(jsonObj) {
+      var owner = jsonObj[0].owner;
+      var group = jsonObj[0].group;
+        var myArticle = document.createElement('article');
+        var myH2 = document.createElement('h2');
+        var myPara1 = document.createElement('p');
+        var myPara2 = document.createElement('p');
+        var myPara3 = document.createElement('p');
+        var myPara4 = document.createElement('p');
+        var myList = document.createElement('ul');
+        myH2.textContent = owner.first_name + " " + owner.last_name;
+        myPara1.textContent = 'Email: ' + owner.email;
+        myPara2.textContent = 'Title: ' + owner.title;
+        myPara3.textContent = 'Group Name:' + group.name;
+        myPara4.textContent = 'Group Description:' + group.description;
+        myArticle.appendChild(myH2);
+        myArticle.appendChild(myPara1);
+        myArticle.appendChild(myPara2);
+        myArticle.appendChild(myPara3);
+        myArticle.appendChild(myPara4);
+        myArticle.appendChild(myList);
+        section.appendChild(myArticle);
+    }
+    </script>
+  </body>
+</html>
